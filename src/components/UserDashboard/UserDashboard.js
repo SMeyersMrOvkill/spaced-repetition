@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LanguageContext from '../../contexts/LanguageContext';
 
+import './UserDashboard.css';
+
 class UserDashboard extends React.Component {
     static contextType = LanguageContext;
     
