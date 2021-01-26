@@ -1,0 +1,28 @@
+
+form {
+    width: 100%;
+}
+
+button {
+    width: 100%;
+}
+
+.Input {
+    height: 30px;
+    width: 100%;
+}
+
+input {
+    width: 100%;
+}
+
+.Form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 600px) {
+    form {
+        width: 350px;
+    }
+}

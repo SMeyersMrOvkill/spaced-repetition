@@ -1,0 +1,9 @@
+nav a {
+    background-color: grey;
+    color: white;
+    padding: 7.5px;
+}
+
+nav a:hover {
+    color: white;
+}
