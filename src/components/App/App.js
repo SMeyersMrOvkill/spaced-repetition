@@ -22,7 +22,9 @@ export default class App extends Component {
     this.state = {
       hasError: false,
       language: {},
-      words: []
+      words: [],
+      head: {},
+      guessResponse: null
     }
   }
 
@@ -38,6 +40,38 @@ export default class App extends Component {
     })
   }
 
+  fetchHead = () => {
+    fetch(`${config.API_ENDPOINT}/language/head`, {
+      headers: {
+        Authorization: `Bearer ${TokenService.getAuthToken()}`,
+        method: 'GET'
+      }
+    }).then(res => res.json()).then(data => {
+      this.setState({head: data});
+    })
+  }
+
+  guessWord = (guess) => {
+    console.log('Guess:', guess);
+    console.log('Stringified Guess:', JSON.stringify({guess}));
+    let obj = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${TokenService.getAuthToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({guess})
+    };
+    console.log('Request object:', obj)
+    fetch(`${config.API_ENDPOINT}/language/guess`, obj)
+    .then(res => res.json()).then(data => {
+      this.setState({guessResponse: data});
+      console.log(data);
+    }).catch(error => {
+      console.log(error);
+    })
+  }
+
   static getDerivedStateFromError(error) {
     console.error(error)
     return { hasError: true }
@@ -49,7 +83,11 @@ export default class App extends Component {
       <LanguageContext.Provider value={{
         language: this.state.language,
         words: this.state.words,
-        fetchLanguage: this.fetchLanguage
+        head: this.state.head,
+        guessResponse: this.state.guessResponse,
+        fetchLanguage: this.fetchLanguage,
+        fetchHead: this.fetchHead,
+        guessWord: this.guessWord,
       }}> 
         <br /><br /><br /><br />
         <div className='App panel'>
